@@ -47,7 +47,9 @@ class Imap:
             except LoginError:
                 self._client.exception("message")
                 return None
-
+            #compliance with RFC 2971
+            #needed by some servers, such as Netease 126/163/188
+            self._client.id_({"name": "IMAPClient", "version": "1.0"})
             # Select our folder
             self._client.select_folder(self.folder, readonly)
 
