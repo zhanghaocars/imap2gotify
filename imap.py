@@ -146,7 +146,8 @@ class Imap:
         specified timeout (in seconds), then returns
         True if new messages exist, otherwise False"""
         self._connect()
-        self._client.idle()
+        if self._client.has_capability("IDLE"):
+            self._client.idle()
         new_exist = False
         self.logger.info(
             "Waiting idle for new messages to arrive, %d second timeout",
